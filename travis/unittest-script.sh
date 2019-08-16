@@ -11,7 +11,7 @@ LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELE
 python3 -m pip install selenium --user || sudo python3 -m pip install selenium --user || exit 1 
 
 CONTAINER_NAME=django-defectdojo_initializer_1
-echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
+echo "export DD_ADMIN_USER='admin'" >> ~/.profile && \
     container_id=(`docker ps -a --filter name=${CONTAINER_NAME}.* | awk 'FNR == 2 {print $1}'`) && \
     docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read -d '' passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \  
     source ~/.profile
