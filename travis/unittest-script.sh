@@ -13,9 +13,9 @@ python3 -m pip install selenium --user || sudo python3 -m pip install selenium -
 CONTAINER_NAME=django-defectdojo_initializer_1
 echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
     container_id=(`docker ps -a --filter name=${CONTAINER_NAME}.* | awk 'FNR == 2 {print $1}'`) && \
-    docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \  
+    docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \
     source ~/.profile
- 
+
 python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.'; exit 1
 
 python3 tests/Product_unit_test.py || echo "Error: Product unittest failed"; exit 1
