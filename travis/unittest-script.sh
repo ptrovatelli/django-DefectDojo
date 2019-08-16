@@ -16,8 +16,10 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
     docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \
     source ~/.profile
 
-python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.'; exit 1
+echo "Running Product type unit test"
+python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.'
 
-python3 tests/Product_unit_test.py || echo "Error: Product unittest failed"; exit 1
+echo "Running Product unit test"
+python3 tests/Product_unit_test.py || echo "Error: Product unittest failed"
 
 exec echo "All Test Ran Successfully"
