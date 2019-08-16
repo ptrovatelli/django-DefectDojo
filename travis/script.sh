@@ -202,6 +202,11 @@ echo "Running test ${TEST}"
       ;;
     unittests)
       echo "run unittests scripts"
+      build_containers
+      docker-compose up -d
+      echo "Waiting for services to start"
+      # wait for services to become available
+      sleep 80
       source ./travis/unittest-script.sh
       ;;
     snyk)
