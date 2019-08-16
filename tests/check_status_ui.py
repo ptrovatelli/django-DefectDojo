@@ -11,7 +11,7 @@ import requests
 class Login(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.addArguments("--headless")
+        self.options.add_argument("--headless")
         self.driver = webdriver.Chrome('chromedriver', options=self.options)
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8080/"

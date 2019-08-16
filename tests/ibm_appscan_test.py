@@ -26,7 +26,7 @@ except:  # This will work for python2 if above fails
 class IBMAppScanTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.addArguments("--headless")
+        self.options.add_argument("--headless")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         # Allow a little time for the driver to initialize
         self.driver.implicitly_wait(30)

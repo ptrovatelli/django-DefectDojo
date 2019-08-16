@@ -26,7 +26,7 @@ except:  # This will work for python2 if above fails
 class DedupeTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.addArguments("--headless")
+        self.options.add_argument("--headless")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8080/"
