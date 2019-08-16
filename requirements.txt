@@ -42,6 +42,7 @@ python-nmap==0.6.1
 pytz==2019.1
 redis==3.2.1
 requests>=2.22.0
+selenium==3.141.0 # required for unittests
 sqlalchemy  # Required by Celery broker transport
 supervisor==4.0.3
 urllib3==1.25.3

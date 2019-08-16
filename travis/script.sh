@@ -200,6 +200,15 @@ echo "Running test ${TEST}"
       echo "Docker compose container status"
       docker-compose -f docker-compose.yml ps
       ;;
+      unittests)
+        echo "run unittests scripts"
+        build_containers
+        docker-compose up -d
+        echo "Waiting for services to start"
+        # wait for services to become available
+        sleep 80
+        source ./travis/unittest-script.sh
+        ;;
     snyk)
       echo "Snyk security testing on containers"
       build_containers
