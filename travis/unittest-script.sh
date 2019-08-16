@@ -1,7 +1,9 @@
 #!/bin/bash
 
-sudo python3 -m pip install selenium --user
+python3 -m pip install selenium --user || sudo python3 -m pip install selenium --user || exit 1 
 
-python3 tests/Product_type_unit_test.py
+python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.'; exit 1
 
-exec python tests/Product_unit_test.py
+python tests/Product_unit_test.py || echo "Error: Product unittest failed"; exit 1
+
+exec echo "All Test Ran Successfully" 
