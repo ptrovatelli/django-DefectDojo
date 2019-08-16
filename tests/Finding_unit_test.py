@@ -28,7 +28,7 @@ class FindingTest(unittest.TestCase):
         # When used with Travis, chromdriver is stored in the same
         # directory as the unit tests
         self.options = Options()
-        self.options.set_headless(headless=True)
+        self.options.addArguments("--headless")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         # Allow a little time for the driver to initialize
         self.driver.implicitly_wait(30)

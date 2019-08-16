@@ -28,7 +28,7 @@ except:  # This will work for python2 if above fails
 class ScannerTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.set_headless(headless=True)
+        self.options.addArguments("--headless")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8080/"

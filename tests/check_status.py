@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 class Login(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.set_headless(headless=True)
+        self.options.addArguments("--headless")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(500)
         self.base_url = "http://localhost:8080/"

@@ -49,14 +49,14 @@ python3 tests/smoke_test.py || (echo "Error: Smoke unittest failed" && exit 1)
 echo "Running Check Status test"
 python3 tests/check_status.py || (echo "Error: Check_status test failed" && exit 1)
 
-echo "Running Check Status UI unit test"
-python3 tests/check_status_ui.py || (echo "Error: Check Status UI test failed" && exit 1)
-
 # The below test are commented out because they are still an unstable work in progress
 ## Once Ready they can be uncommented.
 
 # echo "Running Import Scanner unit test"
 # python3 tests/Import_scanner_unit_test.py || (echo "Error: Smoke unittest failed" && exit 1)
+
+# echo "Running Check Status UI unit test"
+# python3 tests/check_status_ui.py || (echo "Error: Check Status UI test failed" && exit 1)
 
 # echo "Running Zap unit test"
 # python3 tests/zap.py || (echo "Error: Zap unittest failed" && exit 1)
