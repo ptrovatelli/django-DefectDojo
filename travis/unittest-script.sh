@@ -17,10 +17,10 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
     source ~/.profile
 
 echo "Running Product type unit tests"
-python3 tests/Product_type_unit_test.py || (echo 'Error: Product type unittest failed.' && exit 1)
+python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.';exit 1
 
 echo "Running Product unit tests"
-python3 tests/Product_unit_test.py || (echo "Error: Product unittest failed" && exit 1)
+python3 tests/Product_unit_test.p || echo "Error: Product unittest failed";exit 1
 
 echo "Running Endpoint unit tests"
 python3 tests/Endpoint_unit_test.py || (echo "Error: Endpoint unittest failed" && exit 1)
