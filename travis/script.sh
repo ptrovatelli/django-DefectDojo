@@ -200,10 +200,10 @@ echo "Running test ${TEST}"
       echo "Docker compose container status"
       docker-compose -f docker-compose.yml ps
       ;;
-      unittests)
-        echo "run unittests scripts"
-        source ./travis/unittest-script.sh
-        ;;
+    unittests)
+      echo "run unittests scripts"
+      source ./travis/unittest-script.sh
+      ;;
     snyk)
       echo "Snyk security testing on containers"
       build_containers
