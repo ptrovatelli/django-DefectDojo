@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -9,8 +10,9 @@ import os
 
 class ProductTest(unittest.TestCase):
     def setUp(self):
-        # Initialize the driver
-        self.driver = webdriver.Chrome('chromedriver')
+        self.options = Options()
+        self.options.set_headless(headless=True)
+        self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         # Allow a little time for the driver to initialize
         self.driver.implicitly_wait(30)
         # Set the base address of the dojo

@@ -10,7 +10,7 @@ class ProductTest(unittest.TestCase):
     def setUp(self):
         # change path of chromedriver according to which directory you have chromedriver.
         self.options = Options()
-        self.options.add_argument("--headless")
+        self.options.set_headless(headless=True)
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8000/"
