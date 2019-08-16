@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 import unittest
 import re
@@ -24,11 +25,13 @@ except:  # This will work for python2 if above fails
 
 class IBMAppScanTest(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome('chromedriver')
+        self.options = Options()
+        self.options.set_headless(headless=True)
+        self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         # Allow a little time for the driver to initialize
         self.driver.implicitly_wait(30)
         # Set the base address of the dojo
-        self.base_url = "http://localhost:8000/"
+        self.base_url = "http://localhost:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
 

@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -24,9 +25,11 @@ except:  # This will work for python2 if above fails
 
 class DedupeTest(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome('chromedriver')
+        self.options = Options()
+        self.options.set_headless(headless=True)
+        self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:8000/"
+        self.base_url = "http://localhost:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
         self.relative_path = dir_path = os.path.dirname(os.path.realpath(__file__))

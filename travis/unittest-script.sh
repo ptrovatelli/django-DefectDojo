@@ -16,10 +16,40 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
     docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \
     source ~/.profile
 
-echo "Running Product type unit test"
+echo "Running Product type unit tests"
 python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest failed.'
 
-echo "Running Product unit test"
+echo "Running Product unit tests"
 python3 tests/Product_unit_test.py || echo "Error: Product unittest failed"
+
+echo "Running Endpoint unit tests"
+python3 tests/Endpoint_unit_test.py || echo "Error: Endpoint unittest failed"
+
+echo "Running Engagement unit tests"
+python3 tests/Engagement_unit_test.py || echo "Error: Engagement unittest failed"
+
+echo "Running Environment unit tests"
+python3 tests/Environment_unit_test.py || echo "Error: Environment unittest failed"
+
+echo "Running Finding unit tests"
+python3 tests/Finding_unit_test.py || echo "Error: Finding unittest failed"
+
+echo "Running Test unit tests"
+python3 tests/Test_unit_test.py || echo "Error: Test unittest failed"
+
+echo "Running User unit tests"
+python3 tests/User_unit_test.py || echo "Error: User unittest failed"
+
+echo "Running Dedupe unit tests"
+python3 tests/dedupe_unit_test.py || echo "Error: Dedupe unittest failed"
+
+echo "Running Ibm Appscan unit test"
+python3 tests/ibm_appscan_test.py || echo "Error: Ibm AppScan unittest failed"
+
+echo "Running Zap unit test"
+python3 tests/zap.py || echo "Error: Zap unittest failed"
+
+echo "Running Smoke unit test"
+python3 tests/smoke_test.py || echo "Error: Smoke unittest failed"
 
 exec echo "All Test Ran Successfully"
