@@ -2,7 +2,8 @@
 
 LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
     wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip && \
-    sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
+    sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
+    chmod 777 /usr/local/bin/chromedriver;
 
 python3 -m pip install selenium --user || sudo python3 -m pip install selenium --user || exit 1 
 
