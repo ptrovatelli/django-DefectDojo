@@ -10,3 +10,4 @@ python3 tests/Product_type_unit_test.py || echo 'Error: Product type unittest fa
 python tests/Product_unit_test.py || echo "Error: Product unittest failed"; exit 1
 
 exec echo "All Test Ran Successfully" 
+
