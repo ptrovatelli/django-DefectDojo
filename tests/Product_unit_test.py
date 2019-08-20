@@ -163,7 +163,7 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_xpath("//input[@name='_Finished']").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
-        driver.implicitly_wait(10) # wait for 10 for checking result
+        driver.implicitly_wait(25) # wait for 10 for checking result
         # Assert to the query to dtermine status of failure
         self.assertTrue(re.search(r'App Vulnerable to XSS', productTxt))
 

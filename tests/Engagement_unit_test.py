@@ -83,6 +83,7 @@ class EngagementTest(unittest.TestCase):
         driver.find_element_by_id('id_file').send_keys(os.getcwd().replace('/tests', '') + "/dojo/unittests/scans/nmap_sample/nmap_multiple_port.xml")
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         EngagementTXT = driver.find_element_by_tag_name("BODY").text
+        driver.implicitly_wait(40)
         self.assertTrue(re.search(r'Nmap Scan processed, a total of 13 findings were processed', EngagementTXT))
 
     def test_close_new_engagement(self):
