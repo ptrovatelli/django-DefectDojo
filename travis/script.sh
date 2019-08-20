@@ -202,7 +202,10 @@ echo "Running test ${TEST}"
       ;;
     unittests)
       echo "run unittests scripts"
+
       build_containers
+      cp ./dojo/settings/settings.dist.py ./dojo/settings/settings.py
+      source ./docker/setEnv.sh dev
       docker-compose up -d
       echo "Waiting for services to start"
       # wait for services to become available
