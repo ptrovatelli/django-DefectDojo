@@ -11,7 +11,7 @@ import os
 class ProductTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.add_argument("--headless")
+        self.options.add_argument("--headless")  # Comment out this line to allow test run with browser visible
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         # Allow a little time for the driver to initialize
         self.driver.implicitly_wait(30)
@@ -123,6 +123,7 @@ class ProductTest(unittest.TestCase):
         # Query the site to determine if the product has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
         # Assert ot the query to dtermine status of failure
+        driver.implicitly_wait(10) # wait for 10 for checking result
         self.assertTrue(re.search(r'Engagement added successfully', productTxt))
 
     def test_add_product_finding(self):
@@ -162,7 +163,8 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_xpath("//input[@name='_Finished']").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
-        # Assert ot the query to dtermine status of failure
+        driver.implicitly_wait(10) # wait for 10 for checking result
+        # Assert to the query to dtermine status of failure
         self.assertTrue(re.search(r'App Vulnerable to XSS', productTxt))
 
     def test_add_product_endpoints(self):
