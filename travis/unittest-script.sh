@@ -23,12 +23,12 @@ else
     echo "Error: Product type unittest failed."; exit 1
 fi
 
-# echo "Running Product unit tests"
-# if python3 tests/Product_unit_test.py ; then 
-#     echo "Success: Product unit tests passed"
-# else
-#     echo "Error: Product unit tests failed"; exit 1
-# fi
+echo "Running Product unit tests"
+if python3 tests/Product_unit_test.py ; then 
+    echo "Success: Product unit tests passed"
+else
+    echo "Error: Product unit tests failed"; exit 1
+fi
 
 echo "Running Endpoint unit tests"
 if python3 tests/Endpoint_unit_test.py ; then

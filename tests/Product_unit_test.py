@@ -184,7 +184,8 @@ class ProductTest(unittest.TestCase):
         driver.execute_script("document.getElementsByName('impact')[0].style.display = 'inline'")
         driver.find_element_by_name("impact").send_keys(Keys.TAB, "This has a very critical effect on production")
         # "Click" the Done button to Add the finding with other defaults
-        driver.find_element_by_xpath("//input[@name='_Finished']").click()
+        with WaitForPageLoad(driver, timeout=30):
+            driver.find_element_by_xpath("//input[@name='_Finished']").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
         # Assert to the query to dtermine status of failure
