@@ -79,8 +79,9 @@ class EngagementTest(unittest.TestCase):
         driver.find_element_by_link_text('Import Scan Results').click()
         driver.find_element_by_id('id_active').get_attribute('checked')
         driver.find_element_by_id('id_verified').get_attribute('checked')
-        Select(driver.find_element_by_id("id_scan_type")).select_by_visible_text("Nmap Scan")
-        driver.find_element_by_id('id_file').send_keys(os.path.join(dir_path, "../dojo/unittests/scans/nmap_sample/nmap_multiple_port.xml"))
+        Select(driver.find_element_by_id("id_scan_type")).select_by_visible_text("IBM AppScan DAST")
+        scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
+        driver.find_element_by_id('id_file').send_keys(scanner_file)
         with product_unit_test.WaitForPageLoad(driver, timeout=30):
             driver.find_element_by_css_selector("input.btn.btn-primary").click()
         
