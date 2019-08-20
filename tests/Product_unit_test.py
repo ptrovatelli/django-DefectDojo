@@ -6,6 +6,31 @@ import unittest
 import re
 import sys
 import os
+import time
+
+
+class WaitForPageLoad(object):
+    def __init__(self, browser, timeout):
+        self.browser = browser
+        self.timeout = time.time() + timeout
+
+    def __enter__(self):
+        self.old_page = self.browser.find_element_by_tag_name('html')
+    
+    def page_has_loaded(self):
+        new_page = self.browser.find_element_by_tag_name('html')
+        return new_page.id != self.old_page.id
+
+    def __exit__(self, *_):
+        while time.time() < self.timeout:
+            print("got in here")
+            if self.page_has_loaded():
+                return True
+            else: 
+                time.sleep(0.2)
+        raise Exception(
+            'Timeout waiting for {}s'.format(self.timeout)
+        )
 
 
 class ProductTest(unittest.TestCase):
@@ -163,7 +188,6 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_xpath("//input[@name='_Finished']").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
-        driver.implicitly_wait(25) # wait for 10 for checking result
         # Assert to the query to dtermine status of failure
         self.assertTrue(re.search(r'App Vulnerable to XSS', productTxt))
 
