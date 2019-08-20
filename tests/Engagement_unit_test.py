@@ -82,9 +82,7 @@ class EngagementTest(unittest.TestCase):
         Select(driver.find_element_by_id("id_scan_type")).select_by_visible_text("IBM AppScan DAST")
         scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
         driver.find_element_by_id('id_file').send_keys(scanner_file)
-        with product_unit_test.WaitForPageLoad(driver, timeout=30):
-            driver.find_element_by_css_selector("input.btn.btn-primary").click()
-        
+        driver.find_element_by_css_selector("input.btn.btn-primary").click()
         EngagementTXT = driver.find_element_by_tag_name("BODY").text
         print(EngagementTXT)
         self.assertTrue(re.search(r'Nmap Scan processed, a total of 13 findings were processed', EngagementTXT))
