@@ -23,7 +23,6 @@ class WaitForPageLoad(object):
 
     def __exit__(self, *_):
         while time.time() < self.timeout:
-            print("got in here")
             if self.page_has_loaded():
                 return True
             else: 
