@@ -80,6 +80,7 @@ class FindingTest(unittest.TestCase):
         self.assertTrue(re.search(r'Finding saved successfully', productTxt))
 
     def test_add_image(self):
+        print("\n\nDebug Print Log: testing 'add image' \n")
         # The Name of the Finding created by test_add_product_finding => 'App Vulnerable to XSS'
         # Test To Add Finding To product
         # login to site, password set to fetch from environ
@@ -97,9 +98,12 @@ class FindingTest(unittest.TestCase):
         image_path = os.path.join(dir_path, 'finding_image.png')
         driver.find_element_by_id("id_form-0-image").send_keys(image_path)
         # Save uploaded image
-        driver.find_element_by_css_selector("button.btn.btn-success").click()
+        with product_unit_test.WaitForPageLoad(driver, timeout=50):
+            driver.find_element_by_css_selector("button.btn.btn-success").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: findingTXT fetched: {}\n".format(productTxt))
+        print("Checking for '.*Images updated successfully.*'")
         # Assert ot the query to dtermine status of failure
         self.assertTrue(re.search(r'Images updated successfully', productTxt))
 
@@ -259,9 +263,12 @@ class FindingTest(unittest.TestCase):
         file_path = os.path.join(dir_path, 'zap_sample.xml')
         driver.find_element_by_name("file").send_keys(file_path)
         # Click Submit button
-        driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        with product_unit_test.WaitForPageLoad(driver, timeout=50):
+            driver.find_element_by_css_selector("input.btn.btn-primary").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: findingTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*ZAP Scan processed, a total of 4 findings were processed.*'")
         # Assert ot the query to dtermine status of failure
         self.assertTrue(re.search(r'ZAP Scan processed, a total of 4 findings were processed', productTxt))
 
