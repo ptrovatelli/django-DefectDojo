@@ -70,6 +70,7 @@ class EngagementTest(unittest.TestCase):
         self.assertTrue(re.search(r'Engagement updated successfully.', EngagementTXT))
 
     def test_engagement_import_scan_result(self):
+        print("\n\nDebug Print Log: testing 'engagement import Scan result' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product")
         driver.find_element_by_class_name("pull-left").click()
@@ -82,10 +83,12 @@ class EngagementTest(unittest.TestCase):
         Select(driver.find_element_by_id("id_scan_type")).select_by_visible_text("IBM AppScan DAST")
         scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
         driver.find_element_by_id('id_file').send_keys(scanner_file)
-        driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        with product_unit_test.WaitForPageLoad(driver, timeout=50):
+            driver.find_element_by_css_selector("input.btn.btn-primary").click()
         EngagementTXT = driver.find_element_by_tag_name("BODY").text
-        print(EngagementTXT)
-        self.assertTrue(re.search(r'Nmap Scan processed, a total of 13 findings were processed', EngagementTXT))
+        print("\n\nDebug Print Log: EngagementTXT fetched: {}\n".format(EngagementTXT))
+        print("Checking for '.*IBM AppScan DAST processed, a total of 19 findings were processed .*'")
+        self.assertTrue(re.search(r'IBM AppScan DAST processed, a total of 27 findings were processed', EngagementTXT))
 
     def test_close_new_engagement(self):
         driver = self.login_page()

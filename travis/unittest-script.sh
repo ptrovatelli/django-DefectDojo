@@ -1,8 +1,11 @@
 #!/bin/bash
+
+## Installing Google Chrome browser
 sudo apt-get install -y gdebi && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     sudo gdebi google-chrome-stable_current_amd64.deb -n
 
+## Installing Chromium Driver and Selenium for test automation
 LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
     wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip && \
     sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
@@ -10,11 +13,17 @@ LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELE
 
 python3 -m pip install selenium --user || sudo python3 -m pip install selenium --user || exit 1 
 
+# Exporting Username and password to env for access by automation scripts
 CONTAINER_NAME=django-defectdojo_initializer_1
 echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
     container_id=(`docker ps -a --filter name=${CONTAINER_NAME}.* | awk 'FNR == 2 {print $1}'`) && \
     docker logs $container_id 2>&1 | grep "Admin password:"| cut -c17- | (read passwordss; echo "export DD_ADMIN_PASSWORD=$passwordss" >> ~/.profile) && \
     source ~/.profile
+
+# All available Unittest Scripts are activated below
+# If successful, A success message is printed and the script continues
+# If any script is unsuccessful a failure message is printed and the test script
+# Exits with status code of 1
 
 echo "Running Product type unit tests"
 if python3 tests/Product_type_unit_test.py ; then
@@ -23,12 +32,12 @@ else
     echo "Error: Product type unittest failed."; exit 1
 fi
 
-echo "Running Product unit tests"
-if python3 tests/Product_unit_test.py ; then 
-    echo "Success: Product unit tests passed"
-else
-    echo "Error: Product unit tests failed"; exit 1
-fi
+# echo "Running Product unit tests"
+# if python3 tests/Product_unit_test.py ; then 
+#     echo "Success: Product unit tests passed"
+# else
+#     echo "Error: Product unit tests failed"; exit 1
+# fi
 
 echo "Running Endpoint unit tests"
 if python3 tests/Endpoint_unit_test.py ; then
@@ -93,7 +102,7 @@ else
     echo "Error: Check status tests failed"; exit 1
 fi
 
-# The below test are commented out because they are still an unstable work in progress
+# The below tests are commented out because they are still an unstable work in progress
 ## Once Ready they can be uncommented.
 
 # echo "Running Import Scanner unit test"

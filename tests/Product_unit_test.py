@@ -146,8 +146,7 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         # Query the site to determine if the product has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
-        # Assert ot the query to dtermine status of failure
-        driver.implicitly_wait(10) # wait for 10 for checking result
+        # Assert of the query to dtermine status of failure
         self.assertTrue(re.search(r'Engagement added successfully', productTxt))
 
     def test_add_product_finding(self):

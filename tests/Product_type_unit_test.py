@@ -6,7 +6,7 @@ import sys
 import os
 
 
-class ProductTest(unittest.TestCase):
+class ProductTypeTest(unittest.TestCase):
     def setUp(self):
         # change path of chromedriver according to which directory you have chromedriver.
         self.options = Options()
@@ -28,6 +28,7 @@ class ProductTest(unittest.TestCase):
         return driver
 
     def test_create_product_type(self):
+        print("\n\nDebug Print Log: testing 'create product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_id("dropdownMenu1").click()
@@ -37,9 +38,12 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_id("id_critical_product").click()
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type added successfully\..*'")
         self.assertTrue(re.search(r'Product type added successfully.', productTxt))
 
     def test_edit_product_type(self):
+        print("\n\nDebug Print Log: testing 'edit product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_link_text("Edit Product Type").click()
@@ -47,14 +51,19 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_id("id_name").send_keys("Edited product test type")
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type updated successfully\..*'")
         self.assertTrue(re.search(r'Product type updated successfully.', productTxt))
 
     def test_delete_product_type(self):
+        print("\n\nDebug Print Log: testing 'delete product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_link_text("Edit Product Type").click()
         driver.find_element_by_css_selector("input.btn.btn-danger").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type Deleted successfully\..*'")
         self.assertTrue(re.search(r'Product type Deleted successfully.', productTxt))
 
     def tearDown(self):
@@ -64,9 +73,9 @@ class ProductTest(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(ProductTest('test_create_product_type'))
-    suite.addTest(ProductTest('test_edit_product_type'))
-    suite.addTest(ProductTest('test_delete_product_type'))
+    suite.addTest(ProductTypeTest('test_create_product_type'))
+    suite.addTest(ProductTypeTest('test_edit_product_type'))
+    suite.addTest(ProductTypeTest('test_delete_product_type'))
     return suite
 
 
