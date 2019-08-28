@@ -70,7 +70,9 @@ def view_test(request, tid):
 
     product_tab = Product_Tab(prod.id, title="Test", tab="engagements")
     product_tab.setEngagement(test.engagement)
-    jira_config = JIRA_PKey.objects.filter(product=prod.id)[0].conf_id
+    jira_config = JIRA_PKey.objects.filter(product=prod.id).first()
+    if jira_config:
+        jira_config = jira_config.conf_id
     return render(request, 'dojo/view_test.html',
                   {'test': test,
                    'product_tab': product_tab,
