@@ -76,7 +76,10 @@ RUN \
   chmod g=u /var/run && \
   true
 USER root
-RUN chmod -R 0777 /app
+RUN \
+  chmod -R 0777 /app && \
+  mkdir media && \
+  chmod -R 0777 /app/media
 USER 1001
 ENV \
   DD_ADMIN_USER=admin \
