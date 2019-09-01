@@ -75,11 +75,11 @@ RUN \
   chmod g=u dojo/migrations && \
   chmod g=u /var/run && \
   true
-USER root
 RUN \
   chmod -R 0777 /app && \
-  mkdir media && \
+  mkdir /app/media && \
   chmod -R 0777 /app/media
+USER root
 USER 1001
 ENV \
   DD_ADMIN_USER=admin \
