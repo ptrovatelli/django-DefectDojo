@@ -1,5 +1,13 @@
 #!/bin/bash
 
+cp ./dojo/settings/settings.dist.py ./dojo/settings/settings.py && \
+    source ./docker/setEnv.sh dev && \
+    docker-compose up -d
+
+echo "Waiting for services to start"
+# wait for services to become available
+sleep 50
+
 ## Installing Google Chrome browser
 sudo apt-get install -y gdebi && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
@@ -11,7 +19,7 @@ LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELE
     sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
     sudo chmod 777 /usr/local/bin/chromedriver;
 
-python -m pip install virtualenv --user || exit 1
+python3 -m pip install virtualenv --user || exit 1
 
 virtualenv --python=python3 ~/dojo-venv && \
     source ~/dojo-venv/bin/activate
