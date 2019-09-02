@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Installing Google Chrome browser
-sudo apt-get install -y gdebi && \
+sudo apt-get install -y gdebi python3 && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     sudo gdebi google-chrome-stable_current_amd64.deb -n
 
