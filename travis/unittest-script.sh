@@ -26,77 +26,77 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
 # Exits with status code of 1
 
 echo "Running Product type unit tests"
-if sudo -E python3 tests/Product_type_unit_test.py ; then
+if python3 tests/Product_type_unit_test.py ; then
     echo "Success: Product type unit tests passed"
 else
     echo "Error: Product type unittest failed."; exit 1
 fi
 
 # echo "Running Product unit tests"
-# if sudo python3 tests/Product_unit_test.py ; then 
+# if python3 tests/Product_unit_test.py ; then 
 #     echo "Success: Product unit tests passed"
 # else
 #     echo "Error: Product unit tests failed"; exit 1
 # fi
 
 echo "Running Endpoint unit tests"
-if sudo python3 tests/Endpoint_unit_test.py ; then
+if python3 tests/Endpoint_unit_test.py ; then
     echo "Success: Endpoint unit tests passed"
 else
     echo "Error: Endpoint unit tests failed"; exit 1
 fi
 
 echo "Running Engagement unit tests"
-if sudo python3 tests/Engagement_unit_test.py ; then
+if python3 tests/Engagement_unit_test.py ; then
     echo "Success: Engagement unit tests passed"
 else
     echo "Error: Engagement unittest failed"; exit 1
 fi
 
 echo "Running Environment unit tests"
-if sudo python3 tests/Environment_unit_test.py ; then 
+if python3 tests/Environment_unit_test.py ; then 
     echo "Success: Environment unit tests passed"
 else
     echo "Error: Environment unittest failed"; exit 1
 fi
 
 echo "Running Finding unit tests"
-if sudo python3 tests/Finding_unit_test.py ; then
+if python3 tests/Finding_unit_test.py ; then
     echo "Success: Finding unit tests passed"
 else
     echo "Error: Finding unittest failed"; exit 1
 fi
 
 echo "Running Test unit tests"
-if sudo python3 tests/Test_unit_test.py ; then
+if python3 tests/Test_unit_test.py ; then
     echo "Success: Test unit tests passed"
 else
     echo "Error: Test unittest failed"; exit 1
 fi
 
 echo "Running User unit tests"
-if sudo python3 tests/User_unit_test.py ; then
+if python3 tests/User_unit_test.py ; then
     echo "Success: User unit tests passed"
 else
     echo "Error: User unittest failed"; exit 1
 fi
 
 echo "Running Ibm Appscan unit test"
-if sudo python3 tests/ibm_appscan_test.py ; then
+if python3 tests/ibm_appscan_test.py ; then
     echo "Success: Ibm AppScan unit tests passed"
 else
     echo "Error: Ibm AppScan unittest failed"; exit 1
 fi
 
 echo "Running Smoke unit test"
-if sudo python3 tests/smoke_test.py ; then
+if python3 tests/smoke_test.py ; then
     echo "Success: Smoke unit tests passed"
 else
     echo "Error: Smoke unittest failed"; exit 1
 fi
 
 echo "Running Check Status test"
-if sudo python3 tests/check_status.py ; then
+if python3 tests/check_status.py ; then
     echo "Success: check status tests passed"
 else
     echo "Error: Check status tests failed"; exit 1
@@ -106,28 +106,28 @@ fi
 ## Once Ready they can be uncommented.
 
 # echo "Running Import Scanner unit test"
-# if sudo python3 tests/Import_scanner_unit_test.py ; then
+# if python3 tests/Import_scanner_unit_test.py ; then
 #     echo "Success: Import Scanner unit tests passed" 
 # else
 #     echo "Error: Import Scanner unit tests failed"; exit 1
 # fi
 
 # echo "Running Check Status UI unit test"
-# if sudo python3 tests/check_status_ui.py ; then
+# if python3 tests/check_status_ui.py ; then
 #     echo "Success: Check Status UI unit tests passed"
 # else
 #     echo "Error: Check Status UI test failed"; exit 1
 # fi
 
 # echo "Running Zap unit test"
-# if sudo python3 tests/zap.py ; then
+# if python3 tests/zap.py ; then
 #     echo "Success: zap unit tests passed"
 # else
 #     echo "Error: Zap unittest failed"; exit 1
 # fi
 
 # echo "Running Dedupe unit tests"
-# if sudo python3 tests/dedupe_unit_test.py ; then
+# if python3 tests/dedupe_unit_test.py ; then
 #     echo "Success: Dedupe unit tests passed"
 # else
 #     echo "Error: Dedupe unittest failed"; exit 1
