@@ -11,7 +11,7 @@ LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELE
     sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
     sudo chmod 777 /usr/local/bin/chromedriver;
 
-sudo python3 -m pip install selenium --user || exit 1 
+sudo -H python3 -m pip install selenium --user || exit 1 
 
 # Exporting Username and password to env for access by automation scripts
 CONTAINER_NAME=django-defectdojo_initializer_1
@@ -26,7 +26,7 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
 # Exits with status code of 1
 
 echo "Running Product type unit tests"
-if sudo python3 tests/Product_type_unit_test.py ; then
+if sudo -E python3 tests/Product_type_unit_test.py ; then
     echo "Success: Product type unit tests passed"
 else
     echo "Error: Product type unittest failed."; exit 1
