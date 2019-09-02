@@ -11,7 +11,7 @@ LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELE
     sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
     sudo chmod 777 /usr/local/bin/chromedriver;
 
-sudo -H python3 -m pip install selenium --user || exit 1 
+python3 -m pip install selenium --user || exit 1 
 
 # Exporting Username and password to env for access by automation scripts
 CONTAINER_NAME=django-defectdojo_initializer_1
