@@ -11,7 +11,7 @@ echo "Waiting for services to start"
 # wait for services to become available
 sleep 50
 
-alias pythnExec="docker exec -it django-defectdojo_uwsgi_1 python"
+alias pythnExec=""
 
 ## Installing Google Chrome browser
 sudo apt-get install -y gdebi && \
@@ -45,7 +45,7 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
 # Exits with status code of 1
 
 echo "Running Product type unit tests"
-if pythnExec tests/Product_type_unit_test.py ; then
+if docker exec -it django-defectdojo_uwsgi_1 python tests/Product_type_unit_test.py ; then
     echo "Success: Product type unit tests passed"
 else
     echo "Error: Product type unittest failed."; exit 1
