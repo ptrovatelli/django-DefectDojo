@@ -11,7 +11,7 @@ echo "Waiting for services to start"
 # wait for services to become available
 sleep 50
 
-alias pythnExec="docker exec -it django-defectdojo_uwsgi_1 pythnExec"
+alias pythnExec="docker exec -it django-defectdojo_uwsgi_1 python"
 
 ## Installing Google Chrome browser
 sudo apt-get install -y gdebi && \
