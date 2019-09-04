@@ -44,8 +44,9 @@ echo "export DD_ADMIN_USER=admin" >> ~/.profile && \
 # If any script is unsuccessful a failure message is printed and the test script
 # Exits with status code of 1
 
+CONTAINER2=django-defectdojo_uwsgi_1
 echo "Running Product type unit tests"
-if docker exec -it ${CONTAINER_NAME}.* python tests/Product_type_unit_test.py ; then
+if docker exec -it ${CONTAINER2}.* python tests/Product_type_unit_test.py ; then
     echo "Success: Product type unit tests passed"
 else
     echo "Error: Product type unittest failed."; exit 1
