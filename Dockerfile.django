@@ -77,7 +77,10 @@ RUN \
   true
 USER root
 RUN chmod -R 0777 /app
-# USER 1001
+USER 1001
+RUN \
+  mkdir -p /app/media && \
+  chmod -R 0777 /app/media
 ENV \
   DD_ADMIN_USER=admin \
   DD_ADMIN_MAIL=admin@defectdojo.local \
