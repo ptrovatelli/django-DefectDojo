@@ -47,8 +47,6 @@ def _check_ptvsd_port_not_in_use(port):
 
 ptvsd_port = 3000
 if os.environ.get("DD_DEBUG") == "on" and _check_ptvsd_port_not_in_use(ptvsd_port):
-    # do not attach on hot reload
-    # if os.environ.get('RUN_MAIN') or os.environ.get('WERKZEUG_RUN_MAIN'):
     try:
         # enable remote debugging
         import ptvsd
