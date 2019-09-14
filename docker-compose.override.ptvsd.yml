@@ -15,6 +15,11 @@ services:
   celeryworker:
     volumes:
       - '.:/app:z'
+    ports:
+      - target: 3001
+        published: 3001
+        protocol: tcp
+        mode: host
   nginx:
     volumes:
       - './dojo/static/dojo:/usr/share/nginx/html/static/dojo'
