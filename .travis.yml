@@ -1,4 +1,6 @@
 dist: xenial
+addons:
+  chrome: stable
 language: minimal
 services:
   - docker

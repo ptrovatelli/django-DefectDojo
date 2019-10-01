@@ -11,5 +11,9 @@ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install nodejs
 sudo npm install -g snyk
 
+# Start web application and listen on localhost
+google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
 # Install Deployment
 sudo curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
