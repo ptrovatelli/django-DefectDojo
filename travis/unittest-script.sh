@@ -1,32 +1,21 @@
 #!/bin/bash
 
 umask 0002
-# cp ./dojo/settings/settings.dist.py ./dojo/settings/settings.py && \
-#     source ./docker/setEnv.sh dev && \
-#     docker-compose up --build -d
-
-# docker-compose up -d
 
 echo "Waiting for services to start"
 # wait for images to build and services to become available
 sleep 20
 
-# ## Installing Google Chrome browser
-# sudo apt-get install -y gdebi && \
-#     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-#     sudo gdebi google-chrome-stable_current_amd64.deb -n
+## Installing Google Chrome browser
+sudo apt-get install -y gdebi && \
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    sudo gdebi google-chrome-stable_current_amd64.deb -n
 
 ## Installing Chromium Driver and Selenium for test automation
 LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
     wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip && \
     sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
     sudo chmod 777 /usr/local/bin/chromedriver;
-
-# python -m pip install virtualenv --user || exit 1
-
-# # activate python3 virtual environment
-# virtualenv --python=python3 ~/dojo-venv && \
-#     source ~/dojo-venv/bin/activate
 
 python3 -m pip install selenium requests --user || exit 1 
 
