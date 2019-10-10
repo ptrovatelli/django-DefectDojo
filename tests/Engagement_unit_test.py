@@ -84,10 +84,10 @@ class EngagementTest(unittest.TestCase):
         scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
         driver.find_element_by_id('id_file').send_keys(scanner_file)
         with product_unit_test.WaitForPageLoad(driver, timeout=50):
-            driver.find_element_by_css_selector("input.btn.btn-primary").click()
+            driver.find_elements_by_css_selector("button.btn.btn-primary")[1].click()
         EngagementTXT = driver.find_element_by_tag_name("BODY").text
         print("\n\nDebug Print Log: EngagementTXT fetched: {}\n".format(EngagementTXT))
-        print("Checking for '.*IBM AppScan DAST processed, a total of 19 findings were processed .*'")
+        print("Checking for '.*IBM AppScan DAST processed, a total of 27 findings were processed .*'")
         self.assertTrue(re.search(r'IBM AppScan DAST processed, a total of 27 findings were processed', EngagementTXT))
 
     def test_close_new_engagement(self):

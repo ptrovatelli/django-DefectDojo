@@ -241,7 +241,9 @@ class FindingTest(unittest.TestCase):
         # Select and click on the particular finding to edit
         driver.find_element_by_link_text("App Vulnerable to XSS").click()
         # Click on `Delete Template` button
-        driver.find_element_by_name("delete_template").click()
+        driver.find_element_by_xpath("//button[text()='Delete Template']").click()
+        # Click 'Yes' on Alert popup
+        driver.switch_to.alert.accept()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
         # Assert ot the query to dtermine status of failure
@@ -264,7 +266,7 @@ class FindingTest(unittest.TestCase):
         driver.find_element_by_name("file").send_keys(file_path)
         # Click Submit button
         with product_unit_test.WaitForPageLoad(driver, timeout=50):
-            driver.find_element_by_css_selector("input.btn.btn-primary").click()
+            driver.find_elements_by_css_selector("button.btn.btn-primary")[1].click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
         print("\n\nDebug Print Log: findingTxt fetched: {}\n".format(productTxt))
