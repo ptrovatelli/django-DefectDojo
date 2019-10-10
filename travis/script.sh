@@ -203,8 +203,8 @@ echo "Running test ${TEST}"
     unittests)
       echo "run unittests scripts"
       cp ./dojo/settings/settings.dist.py ./dojo/settings/settings.py
-      source ./docker/setEnv.sh dev
-      docker-compose build
+      source ./docker/setEnv.sh unit_test
+      docker-compose up -d
       source ./travis/unittest-script.sh
       ;;
     snyk)

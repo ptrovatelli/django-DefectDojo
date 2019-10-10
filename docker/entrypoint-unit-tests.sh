@@ -1,5 +1,6 @@
 #!/bin/sh
 # Run available unittests with a simple setup
+umask 0002
 
 cd /app
 

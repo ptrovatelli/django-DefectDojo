@@ -1,15 +1,15 @@
 #!/bin/bash
 
-
+umask 0002
 # cp ./dojo/settings/settings.dist.py ./dojo/settings/settings.py && \
 #     source ./docker/setEnv.sh dev && \
 #     docker-compose up --build -d
 
-docker-compose up -d
+# docker-compose up -d
 
 echo "Waiting for services to start"
 # wait for images to build and services to become available
-sleep 200
+sleep 50
 
 # ## Installing Google Chrome browser
 # sudo apt-get install -y gdebi && \
