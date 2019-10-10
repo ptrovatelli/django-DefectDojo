@@ -16,7 +16,7 @@ class WaitForPageLoad(object):
 
     def __enter__(self):
         self.old_page = self.browser.find_element_by_tag_name('html')
-    
+
     def page_has_loaded(self):
         new_page = self.browser.find_element_by_tag_name('html')
         return new_page.id != self.old_page.id
@@ -25,7 +25,7 @@ class WaitForPageLoad(object):
         while time.time() < self.timeout:
             if self.page_has_loaded():
                 return True
-            else: 
+            else:
                 time.sleep(0.2)
         raise Exception(
             'Timeout waiting for {}s'.format(self.timeout)

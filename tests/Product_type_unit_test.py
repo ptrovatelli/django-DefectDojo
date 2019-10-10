@@ -39,7 +39,7 @@ class ProductTypeTest(unittest.TestCase):
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
         print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
-        print("Checking for '.*Product type added successfully\..*'")
+        print("Checking for '.*Product type added successfully*'")
         self.assertTrue(re.search(r'Product type added successfully.', productTxt))
 
     def test_edit_product_type(self):
@@ -52,7 +52,7 @@ class ProductTypeTest(unittest.TestCase):
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
         print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
-        print("Checking for '.*Product type updated successfully\..*'")
+        print("Checking for '.*Product type updated successfully.*'")
         self.assertTrue(re.search(r'Product type updated successfully.', productTxt))
 
     def test_delete_product_type(self):
@@ -63,7 +63,7 @@ class ProductTypeTest(unittest.TestCase):
         driver.find_element_by_css_selector("input.btn.btn-danger").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
         print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
-        print("Checking for '.*Product type Deleted successfully\..*'")
+        print("Checking for '.*Product type Deleted successfully.*'")
         self.assertTrue(re.search(r'Product type Deleted successfully.', productTxt))
 
     def tearDown(self):

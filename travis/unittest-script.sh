@@ -9,7 +9,7 @@ umask 0002
 
 echo "Waiting for services to start"
 # wait for images to build and services to become available
-sleep 50
+sleep 20
 
 # ## Installing Google Chrome browser
 # sudo apt-get install -y gdebi && \
