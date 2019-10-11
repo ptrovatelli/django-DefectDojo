@@ -69,28 +69,6 @@ class EngagementTest(unittest.TestCase):
         EngagementTXT = driver.find_element_by_tag_name("BODY").text
         self.assertTrue(re.search(r'Engagement updated successfully.', EngagementTXT))
 
-    def test_engagement_import_scan_result(self):
-        print("\n\nDebug Print Log: testing 'engagement import Scan result' \n")
-        driver = self.login_page()
-        driver.get(self.base_url + "product")
-        driver.find_element_by_class_name("pull-left").click()
-        driver.find_element_by_link_text('View Engagements').click()
-        driver.find_element_by_link_text("edited test engagement").click()
-        driver.find_elements_by_id("dropdownMenu1")[1].click()
-        with product_unit_test.WaitForPageLoad(driver, timeout=50):
-            driver.find_element_by_link_text('Import Scan Results').click()
-        driver.find_element_by_id('id_active').get_attribute('checked')
-        driver.find_element_by_id('id_verified').get_attribute('checked')
-        Select(driver.find_element_by_id("id_scan_type")).select_by_visible_text("IBM AppScan DAST")
-        scanner_file = os.path.join(dir_path, "ibm_appscan_xml_file.xml")
-        driver.find_element_by_id('id_file').send_keys(scanner_file)
-        with product_unit_test.WaitForPageLoad(driver, timeout=50):
-            driver.find_elements_by_css_selector("button.btn.btn-primary")[1].click()
-        EngagementTXT = driver.find_element_by_tag_name("BODY").text
-        print("\n\nDebug Print Log: EngagementTXT fetched: {}\n".format(EngagementTXT))
-        print("Checking for '.*IBM AppScan DAST processed, a total of 27 findings were processed .*'")
-        self.assertTrue(re.search(r'IBM AppScan DAST processed, a total of 27 findings were processed', EngagementTXT))
-
     def test_close_new_engagement(self):
         driver = self.login_page()
         driver.get(self.base_url + "product")
@@ -137,7 +115,6 @@ def suite():
     suite.addTest(product_unit_test.ProductTest('test_create_product'))
     suite.addTest(EngagementTest('test_add_new_engagement'))
     suite.addTest(EngagementTest('test_edit_created_new_engagement'))
-    suite.addTest(EngagementTest('test_engagement_import_scan_result'))
     suite.addTest(EngagementTest('test_close_new_engagement'))
     suite.addTest(EngagementTest('test_delete_new_closed_engagement'))
     suite.addTest(EngagementTest('test_new_ci_cd_engagement'))
