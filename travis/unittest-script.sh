@@ -52,12 +52,12 @@ else
     echo "Error: Endpoint unit tests failed"; exit 1
 fi
 
-echo "Running Engagement unit tests"
-if python3 tests/Engagement_unit_test.py ; then
-    echo "Success: Engagement unit tests passed"
-else
-    echo "Error: Engagement unittest failed"; exit 1
-fi
+# echo "Running Engagement unit tests"
+# if python3 tests/Engagement_unit_test.py ; then
+#     echo "Success: Engagement unit tests passed"
+# else
+#     echo "Error: Engagement unittest failed"; exit 1
+# fi
 
 echo "Running Environment unit tests"
 if python3 tests/Environment_unit_test.py ; then 
