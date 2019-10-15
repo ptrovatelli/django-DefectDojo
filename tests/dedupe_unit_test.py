@@ -8,7 +8,6 @@ import unittest
 import re
 import sys
 import os
-import time
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
