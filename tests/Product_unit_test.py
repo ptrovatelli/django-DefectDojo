@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -10,11 +11,23 @@ import os
 class ProductTest(unittest.TestCase):
     def setUp(self):
         # Initialize the driver
-        self.driver = webdriver.Chrome('chromedriver')
-        # Allow a little time for the driver to initialize
-        self.driver.implicitly_wait(30)
+        self.options = Options()
+        self.options.add_argument("--headless")
+
+        # troubleshoots "unknown error: DevToolsActivePort file doesn't exist" with docker xenial
+        self.options.add_argument("--disable-dev-shm-usage")
+        self.options.add_argument("--no-sandbox")
+
+        # deactivate proxy
+        self.options.add_argument("--proxy-server='direct://'")
+        self.options.add_argument("--proxy-bypass-list=*")
+
+        self.options.add_argument("--remote-debugging-port=8888")
+        self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
+        self.driver.implicitly_wait(10)
+
         # Set the base address of the dojo
-        self.base_url = "http://localhost:8000/"
+        self.base_url = "http://nginx:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
 

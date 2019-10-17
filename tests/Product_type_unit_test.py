@@ -16,7 +16,11 @@ class ProductTypeTest(unittest.TestCase):
         self.options.add_argument("--disable-dev-shm-usage")
         self.options.add_argument("--no-sandbox")
 
-        self.options.add_argument("--proxy-bypass-list=http://nginx");
+        # deactivate proxy
+        self.options.add_argument("--proxy-server='direct://'")
+        self.options.add_argument("--proxy-bypass-list=*")
+
+        self.options.add_argument("--remote-debugging-port=8888")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
         self.driver.implicitly_wait(10)
         self.base_url = "http://nginx:8080/"
@@ -26,6 +30,7 @@ class ProductTypeTest(unittest.TestCase):
     def login_page(self):
         driver = self.driver
         driver.get(self.base_url + "login")
+        print(driver.page_source.encode("utf-8"))
         driver.find_element_by_id("id_username").clear()
         driver.find_element_by_id("id_username").send_keys(os.environ['DD_ADMIN_USER'])
         driver.find_element_by_id("id_password").clear()

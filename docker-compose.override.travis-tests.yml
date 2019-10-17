@@ -40,6 +40,11 @@ services:
       dockerfile: Dockerfile.travis
     image: defectdojo/defectdojo-travis:${DJANGO_VERSION:-latest}
     entrypoint: ['/wait-for-it.sh', 'mysql:3306', '-t', '30', '--', '/entrypoint-travis-tests-travis.sh']
+    ports:
+      - target: 8889
+        published: 8889
+        protocol: tcp
+        mode: host
     environment:
       DD_ADMIN_USER: ${DD_ADMIN_USER:-admin}
       DD_ADMIN_PASSWORD: ${DD_ADMIN_PASSWORD}
