@@ -35,12 +35,22 @@ class WaitForPageLoad(object):
 class ProductTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
-        self.options.add_argument("--headless")  # Comment out this line to allow test run with browser visible
+        self.options.add_argument("--headless")
+
+        # troubleshoots "unknown error: DevToolsActivePort file doesn't exist" with docker xenial
+        self.options.add_argument("--disable-dev-shm-usage")
+        self.options.add_argument("--no-sandbox")
+
+        # deactivate proxy
+        self.options.add_argument("--proxy-server='direct://'")
+        self.options.add_argument("--proxy-bypass-list=*")
+
+        self.options.add_argument("--remote-debugging-port=8888")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
-        # Allow a little time for the driver to initialize
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(10)
+
         # Set the base address of the dojo
-        self.base_url = "http://localhost:8080/"
+        self.base_url = "http://nginx:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
 
@@ -183,8 +193,8 @@ class ProductTest(unittest.TestCase):
         driver.execute_script("document.getElementsByName('impact')[0].style.display = 'inline'")
         driver.find_element_by_name("impact").send_keys(Keys.TAB, "This has a very critical effect on production")
         # "Click" the Done button to Add the finding with other defaults
-        with WaitForPageLoad(driver, timeout=30):
-            driver.find_element_by_xpath("//input[@name='_Finished']").click()
+      
+        driver.find_element_by_xpath("//input[@name='_Finished']").click()
         # Query the site to determine if the finding has been added
         productTxt = driver.find_element_by_tag_name("BODY").text
         # Assert to the query to dtermine status of failure

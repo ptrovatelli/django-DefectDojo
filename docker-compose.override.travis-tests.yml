@@ -1,0 +1,54 @@
+---
+version: '3.7'
+services:
+  uwsgi:
+    entrypoint: ['/wait-for-it.sh', 'mysql:3306', '-t', '30', '--', '/entrypoint-travis-tests-uwsgi.sh']
+    volumes:
+      - '.:/app:z'
+    environment:
+      DD_DEBUG: 'on'
+      DD_TEST_DATABASE_NAME: ${DD_TEST_DATABASE_NAME:-test_defectdojo}
+      DD_DATABASE_NAME: ${DD_TEST_DATABASE_NAME:-test_defectdojo}
+  celerybeat:
+    environment:
+      DD_DATABASE_URL: ${DD_TEST_DATABASE_URL:-mysql://defectdojo:defectdojo@mysql:3306/test_defectdojo}
+    volumes:
+      - '.:/app:z'
+  celeryworker:
+    environment:
+      DD_DATABASE_URL: ${DD_TEST_DATABASE_URL:-mysql://defectdojo:defectdojo@mysql:3306/test_defectdojo}
+    volumes:
+      - '.:/app:z'
+  initializer:
+    environment:
+      DD_DATABASE_URL: ${DD_TEST_DATABASE_URL:-mysql://defectdojo:defectdojo@mysql:3306/test_defectdojo}
+    volumes:
+      - '.:/app:z'
+  mysql:
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    environment:
+      MYSQL_DATABASE: ${DD_TEST_DATABASE_NAME:-test_defectdojo}
+    volumes:
+       - defectdojo_data_travistest:/var/lib/mysql
+  travis:
+    build: 
+      context: ./
+      dockerfile: Dockerfile.travis
+    image: defectdojo/defectdojo-travis:${DJANGO_VERSION:-latest}
+    entrypoint: ['/wait-for-it.sh', 'mysql:3306', '-t', '30', '--', '/entrypoint-travis-tests-travis.sh']
+    ports:
+      - target: 8889
+        published: 8889
+        protocol: tcp
+        mode: host
+    environment:
+      DD_ADMIN_USER: ${DD_ADMIN_USER:-admin}
+      DD_ADMIN_PASSWORD: ${DD_ADMIN_PASSWORD}
+    volumes:
+      - '.:/app:z'
+volumes:
+  defectdojo_data_travistest: {}

@@ -1,22 +1,36 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import unittest
 import re
 import sys
 import os
 
 
-class ProductTest(unittest.TestCase):
+class ProductTypeTest(unittest.TestCase):
     def setUp(self):
         # change path of chromedriver according to which directory you have chromedriver.
-        self.driver = webdriver.Chrome('chromedriver')
-        self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:8000/"
+        self.options = Options()
+        self.options.add_argument("--headless")
+
+        # troubleshoots "unknown error: DevToolsActivePort file doesn't exist" with docker xenial
+        self.options.add_argument("--disable-dev-shm-usage")
+        self.options.add_argument("--no-sandbox")
+
+        # deactivate proxy
+        self.options.add_argument("--proxy-server='direct://'")
+        self.options.add_argument("--proxy-bypass-list=*")
+
+        self.options.add_argument("--remote-debugging-port=8888")
+        self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
+        self.driver.implicitly_wait(10)
+        self.base_url = "http://nginx:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
 
     def login_page(self):
         driver = self.driver
         driver.get(self.base_url + "login")
+        print(driver.page_source.encode("utf-8"))
         driver.find_element_by_id("id_username").clear()
         driver.find_element_by_id("id_username").send_keys(os.environ['DD_ADMIN_USER'])
         driver.find_element_by_id("id_password").clear()
@@ -25,6 +39,7 @@ class ProductTest(unittest.TestCase):
         return driver
 
     def test_create_product_type(self):
+        print("\n\nDebug Print Log: testing 'create product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_id("dropdownMenu1").click()
@@ -34,9 +49,12 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_id("id_critical_product").click()
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type added successfully*'")
         self.assertTrue(re.search(r'Product type added successfully.', productTxt))
 
     def test_edit_product_type(self):
+        print("\n\nDebug Print Log: testing 'edit product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_link_text("Edit Product Type").click()
@@ -44,14 +62,19 @@ class ProductTest(unittest.TestCase):
         driver.find_element_by_id("id_name").send_keys("Edited product test type")
         driver.find_element_by_css_selector("input.btn.btn-primary").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type updated successfully.*'")
         self.assertTrue(re.search(r'Product type updated successfully.', productTxt))
 
     def test_delete_product_type(self):
+        print("\n\nDebug Print Log: testing 'delete product type' \n")
         driver = self.login_page()
         driver.get(self.base_url + "product/type")
         driver.find_element_by_link_text("Edit Product Type").click()
         driver.find_element_by_css_selector("input.btn.btn-danger").click()
         productTxt = driver.find_element_by_tag_name("BODY").text
+        print("\n\nDebug Print Log: productTxt fetched: {}\n".format(productTxt))
+        print("Checking for '.*Product type Deleted successfully.*'")
         self.assertTrue(re.search(r'Product type Deleted successfully.', productTxt))
 
     def tearDown(self):
@@ -61,9 +84,9 @@ class ProductTest(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(ProductTest('test_create_product_type'))
-    suite.addTest(ProductTest('test_edit_product_type'))
-    suite.addTest(ProductTest('test_delete_product_type'))
+    suite.addTest(ProductTypeTest('test_create_product_type'))
+    suite.addTest(ProductTypeTest('test_edit_product_type'))
+    suite.addTest(ProductTypeTest('test_delete_product_type'))
     return suite
 
 

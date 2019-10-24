@@ -1,0 +1,39 @@
+FROM ubuntu:xenial@sha256:c0ae44d97c088026f44b1a4ef9da06d3fa8e771b95d95bffbcbddea6d1e450b7
+# (amd64)
+
+WORKDIR /app
+
+RUN \
+# This is more or less travis "before-install.sh"
+apt-get -y update && \
+apt-get -f install && \
+apt-get -y install socat curl python3-software-properties && \
+apt-get -y install python3-pip python3-setuptools python3-wheel wget zip && \
+pip3 --version && \
+# this is more or less the begining of travis "unittest-script.sh"
+## Installing Google Chrome browser
+apt-get install -y gdebi && \
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    gdebi google-chrome-stable_current_amd64.deb -n && \
+## Installing Chromium Driver and Selenium for test automation
+LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip && \
+    unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
+    chmod 777 /usr/local/bin/chromedriver && \
+python3 -m pip install selenium requests && \
+# cleaning
+#apt-get clean && \
+#rm -rf /var/lib/apt/lists && \
+# rm /tmp/chromedriver.zip && \
+true
+
+# If you need kubernetes, minikube, helm, add the appropriate install instructions from travis "before-script.sh"
+
+COPY \
+  docker/entrypoint-travis-tests-travis.sh \
+  docker/wait-for-it.sh \
+  /
+
+USER 1000
+EXPOSE 8889
+#ENTRYPOINT ["/entrypoint-travis-tests-travis.sh"]

@@ -60,8 +60,10 @@ COPY \
   docker/entrypoint-initializer.sh \
   docker/entrypoint-uwsgi.sh \
   docker/entrypoint-uwsgi-dev.sh \
+  docker/entrypoint-uwsgi-ptvsd.sh \
   docker/entrypoint-unit-tests.sh \
   docker/entrypoint-unit-tests-devDocker.sh \
+  docker/entrypoint-travis-tests-uwsgi.sh \
   docker/wait-for-it.sh \
   /
 COPY wsgi.py manage.py tests/unit-tests.sh ./

@@ -29,9 +29,19 @@ class DedupeTest(unittest.TestCase):
     def setUp(self):
         self.options = Options()
         self.options.add_argument("--headless")
+
+        # troubleshoots "unknown error: DevToolsActivePort file doesn't exist" with docker xenial
+        self.options.add_argument("--disable-dev-shm-usage")
+        self.options.add_argument("--no-sandbox")
+
+        # deactivate proxy
+        self.options.add_argument("--proxy-server='direct://'")
+        self.options.add_argument("--proxy-bypass-list=*")
+
+        self.options.add_argument("--remote-debugging-port=8888")
         self.driver = webdriver.Chrome('chromedriver', chrome_options=self.options)
-        self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:8080/"
+        self.driver.implicitly_wait(10)
+        self.base_url = "http://nginx:8080/"
         self.verificationErrors = []
         self.accept_next_alert = True
         self.relative_path = dir_path = os.path.dirname(os.path.realpath(__file__))
