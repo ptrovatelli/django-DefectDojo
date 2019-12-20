@@ -1382,7 +1382,9 @@ class Finding(models.Model):
                     deduplicationLogger.debug(hashcodeField + ' : ' + str(getattr(self, hashcodeField)))
                 else:
                     # For endpoints, need to compute the field
-                    fields_to_hash = fields_to_hash + self.get_endpoints()
+                    myEndpoints = self.get_endpoints()
+                    fields_to_hash = fields_to_hash + myEndpoints
+                    deduplicationLogger.debug(hashcodeField + ' : ' + myEndpoints)
             deduplicationLogger.debug("compute_hash_code - fields_to_hash = " + fields_to_hash)
             return self.hash_fields(fields_to_hash)
         else:
@@ -1393,6 +1395,7 @@ class Finding(models.Model):
         fields_to_hash = self.title + str(self.cwe) + str(self.line) + str(self.file_path) + self.description
         if self.dynamic_finding:
             fields_to_hash = fields_to_hash + self.get_endpoints()
+        deduplicationLogger.debug("compute_hash_code_legacy - fields_to_hash = " + fields_to_hash)
         return self.hash_fields(fields_to_hash)
 
     # Get endpoints from self.unsaved_endpoints
@@ -1400,10 +1403,13 @@ class Finding(models.Model):
     def get_endpoints(self):
         endpoint_str = ''
         if len(self.unsaved_endpoints) > 0 and self.id is None:
+            deduplicationLogger.debug("get_endpoints: there are unsaved_endpoints and self.id is None")
             for e in self.unsaved_endpoints:
                 endpoint_str += str(e.host_with_port)
         else:
+            deduplicationLogger.debug("get_endpoints: there aren't unsaved_endpoints or self.id is not None. endpoints count: " + str(self.endpoints.count()))
             for e in self.endpoints.all():
+                deduplicationLogger.debug("self.endpoints.all():" + e.host)
                 endpoint_str += str(e.host_with_port)
         return endpoint_str
 
@@ -1566,7 +1572,8 @@ class Finding(models.Model):
         return long_desc
 
     def save(self, dedupe_option=True, false_history=False, rules_option=True, issue_updater_option=True, *args, **kwargs):
-        logger.debug("Saving finding of id " + str(self.id))
+        logger.debug("Saving finding of id " + str(self.id) + " type: " + str(type(self.id)))
+
         # Make changes to the finding before it's saved to add a CWE template
         new_finding = False
         if self.pk is None:
@@ -1581,7 +1588,6 @@ class Finding(models.Model):
             if issue_updater_option:
                 from dojo.tasks import async_tool_issue_updater
                 async_tool_issue_updater.delay(self)
-
         if (self.file_path is not None) and (self.endpoints.count() == 0):
             self.static_finding = True
             self.dynamic_finding = False
@@ -1589,8 +1595,15 @@ class Finding(models.Model):
             self.static_finding = True
 
         # Compute hash code before dedupe
-        if (self.hash_code is None):
-            self.hash_code = self.compute_hash_code()
+        if (self.hash_code is not None):
+            deduplicationLogger.debug("Hash_code already computed for finding")
+        else:
+            logger.debug("(bis)Saving finding of id " + str(self.id) + " type: " + str(type(self.id)))
+            if (self.id is not None):
+                deduplicationLogger.debug("About to compute hash_code while saving finding. Number of endpoints found: " + str(self.endpoints.count()))
+                self.hash_code = self.compute_hash_code()
+            else:
+                deduplicationLogger.debug("Do not compute hash_code while saving finding of id None")
         self.found_by.add(self.test.test_type)
 
         if rules_option:
