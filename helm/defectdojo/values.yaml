@@ -32,6 +32,8 @@ admin:
 celery:
   broker: rabbitmq
   logLevel: DEBUG
+  affinity: {}
+  nodeSelector: {}
   beat:
     affinity: {}
     nodeSelector: {}
@@ -77,6 +79,7 @@ django:
 initializer:
   run: true
   keepSeconds: 60
+  nodeSelector: {}
   resources:
     requests:
       cpu: 100m
