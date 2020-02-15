@@ -34,6 +34,13 @@ celery:
   logLevel: DEBUG
   affinity: {}
   nodeSelector: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 2000m
+      memory: 256Mi
   beat:
     affinity: {}
     nodeSelector: {}
@@ -41,6 +48,9 @@ celery:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 2000m
+        memory: 256Mi
     tolerations: []
   worker:
     affinity: {}
@@ -51,6 +61,9 @@ celery:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 2000m
+        memory: 256Mi
     tolerations: []
 
 django:
@@ -67,6 +80,9 @@ django:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 2000m
+        memory: 256Mi
   nodeSelector: {}
   replicas: 1
   tolerations: []
@@ -75,6 +91,9 @@ django:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 2000m
+        memory: 256Mi
 
 initializer:
   run: true
@@ -84,6 +103,9 @@ initializer:
     requests:
       cpu: 100m
       memory: 128Mi
+    limits:
+      cpu: 2000m
+      memory: 256Mi
 
 mysql:
   enabled: false
