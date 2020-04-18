@@ -3,11 +3,11 @@
 
 == Release ==
 participant "Dev branch" as devbranch order 10 #LightBlue
-participant "RC branch" as rcbranch order 20 #YellowGreen
+participant "Release branch" as rlsbranch order 20 #YellowGreen
 participant "Master branch" as master order 30 #99FF99
 participant "Hotfix branch" as hotbranch order 40 #DarkSalmon
 
-{startrc} devbranch -> rcbranch ++ #YellowGreen: Start release x.y.0
+{startrc} devbranch -> rlsbranch ++ #YellowGreen: Create branch release_x.y.0
 
 
 note left of devbranch
@@ -15,27 +15,25 @@ note left of devbranch
 end note
 
 
-rcbranch <- devbranch: Merge bug fixes
-rcbranch <- devbranch: Merge more bug fixes
+rlsbranch <- devbranch: Merge bug fixes
+rlsbranch <- devbranch: Merge more bug fixes
 
 
-note right of rcbranch
+note right of rlsbranch
   - Bug fixes
-  - Tag "x.y.0-rc" on RC branch
-  - Push to DockerHub with -rc suffix
 end note
 
 
-rcbranch -> master: Merge
+rlsbranch -> master: Merge
 note right of master
     Official release
     - Tag "x.y.0"
     - Push to DockerHub
 end note
 
-{endrc} rcbranch --> devbranch --: Release done
+{endrc} rlsbranch --> devbranch --: Release done
 
-devbranch -> rcbranch: Start release x.(y+1).0
+devbranch -> rlsbranch: Start release x.(y+1).0
 note left of devbranch
   Increase x if case of
   major breaking change
@@ -49,17 +47,17 @@ end note
 
 master -> hotbranch ++ #DarkSalmon: Create short-lived fix branch x.y.1
 
-note right of hotbranch
-    Severe bug
-    to be corrected
+note left of devbranch
+    Severe bug fixed
 end note
-hotbranch <- devbranch --: Merge hotfix per PR
+
+hotbranch <- devbranch --: Merge hotfix
 hotbranch --> master: Merge
 note right of master
     Official release
-    - Tag "x.y.1" on master
+    - Tag "x.y.1"
     - Deploy to DockerHub
 end note
-hotbranch --> rcbranch: Merge
+hotbranch --> rlsbranch: Merge
 
 @enduml
